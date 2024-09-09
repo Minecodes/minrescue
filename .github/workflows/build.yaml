@@ -16,7 +16,7 @@ jobs:
 
     - name: Set up Docker container with Arch Linux
       run: |
-        docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace archlinux:latest /bin/bash -c "
+        docker run --rm --privileged -v ${{ github.workspace }}:/workspace -w /workspace archlinux:latest /bin/bash -c "
           # Update and install dependencies
           pacman -Syu --noconfirm
           bash install_dependencies.sh
