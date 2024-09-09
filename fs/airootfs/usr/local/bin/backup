@@ -1,0 +1,99 @@
+#!/bin/bash
+function yn {
+    while true; do
+        read -p "$* [y/n]: " yn
+        case $yn in
+            [Yy]*) return 0  ;;
+            [Nn]*) echo "Aborted" ; return  1 ;;
+        esac
+    done
+}
+
+function select_timezone() {
+    echo "What timezone are you in? (e.g. Europe/Berlin)"
+    echo -n "> "
+    read tz
+}
+
+function select_drive() {
+    # Get available drives
+    drives=$(lsblk -dno NAME)
+    
+    # Check if there are any drives
+    if [[ -z "$drives" ]]; then
+        echo "Error: No available drives found."
+        exit 1
+    fi
+    
+    # Display drive options
+    echo "Select a drive:"
+    select drive in $drives; do
+        # Check if a valid drive was selected
+        if [[ -z "$drive" ]]; then
+            echo "Please select a valid drive."
+        else
+            drive=$drive
+            break
+        fi
+    done
+}
+
+function select_hostname() {
+    echo "What's the name of the computer? (e.g. thinkpad)"
+    echo -n "> "
+    read hname
+}
+
+function select_shutdown() {
+    echo -n "Should the computer be powered off after the backup? [y/n] "
+    read yn
+    
+    case $yn in
+        [Yy]*) poff="yes"  ;;
+        [Nn]*) poff="no" ;;
+    esac
+}
+
+function set_timezone() {
+    timedatectl set-timezone "$1"
+}
+
+function create_iso() {
+    mkdir "$1"
+    cd "$1"
+    echo "Folder: $(pwd)"
+    dd if=/dev/$2 conv=sync,noerror status=progress bs=64M of="backup.iso"
+    cd ..
+    LOGS="$(7z a "$3.7z" "$1")"
+}
+
+function finished() {
+    if [[ "$1" == "yes" ]]; then
+        sudo shutdown now
+    fi
+}
+
+function main() {
+    local tz
+    select_timezone
+    
+    local drive
+    select_drive
+    
+    local hname
+    select_hostname
+    
+    local poff
+    select_shutdown
+    
+    clear
+    
+    echo "Selected timezone: $tz"
+    echo "Selected drive: $drive"
+    echo "Selected hostname: $hname"
+    echo "Selected power off: $poff"
+    yn "Is this correct?" && create_iso "$(date +"%m-%d-%y")" "$drive" "$hname"
+    finished "$poff"
+}
+
+main
