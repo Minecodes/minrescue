@@ -4,4 +4,5 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
+mkdir -p dist work
 mkarchiso -v -w work -o dist fs
