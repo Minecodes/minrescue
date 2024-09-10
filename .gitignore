@@ -1,3 +1,5 @@
-fs/airootfs/usr/local/bin/backup_ntfy
+full/airootfs/usr/local/bin/backup_ntfy
+minimal/airootfs/usr/bin/backup_ntfy
 dist/
-work/
+work1/
+work2/

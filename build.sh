@@ -4,5 +4,6 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-mkdir -p dist work
-mkarchiso -v -w work -o dist fs
+mkdir -p dist work1 work2
+mkarchiso -v -w work1 -o dist full
+mkarchiso -v -w work2 -o dist minimal
