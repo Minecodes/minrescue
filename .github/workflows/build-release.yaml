@@ -41,6 +41,7 @@ jobs:
   release:
     name: Create GitHub Release
     needs: [prepare]
+    permissions: write-all
     if: needs.prepare.outputs.should_build == 'true'
     runs-on: ubuntu-latest
     outputs:
@@ -75,6 +76,7 @@ jobs:
   build:
     needs: [prepare, release]
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -100,6 +102,7 @@ jobs:
   publish:
     name: Publish Release
     needs: [release, build]
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
     - name: Publish GitHub Release
