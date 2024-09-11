@@ -1,0 +1,1 @@
+Added releases, release notes, and content to the README.md file. Also, hopefully fixed the automated release.

@@ -60,7 +60,7 @@ jobs:
     - name: Read release description from file
       id: read_description
       run: |
-        description=$(cat release.md)
+        description=$(cat release.txt)
         echo "description=$description" >> $GITHUB_OUTPUT
 
     - name: Create or update GitHub Release
