@@ -97,6 +97,8 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_REPO: ${{ github.repository }}
       run: |
+        ls
+        ls *
         gh release upload "${{ needs.release.outputs.tag }}" "dist/*"
 
   publish:
