@@ -98,7 +98,7 @@ jobs:
         GH_REPO: ${{ github.repository }}
       run: |
         ls
-        ls *
+        ls dist
         gh release upload "${{ needs.release.outputs.tag }}" "dist/*"
 
   publish:
