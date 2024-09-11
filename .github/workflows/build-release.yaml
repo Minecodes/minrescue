@@ -71,7 +71,7 @@ jobs:
       run: |
         tag="${{ steps.tag.outputs.tag }}"
         description="${{ steps.read_description.outputs.description }}"
-        gh release create "$tag" --title "$tag" --notes "$description"
+        gh release create "$tag" --title "$tag" --notes "$description" --draft=true
 
   build:
     needs: [prepare, release]
