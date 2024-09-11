@@ -1,3 +1,4 @@
  - Added releases
  - Added release notes
  - Finally added content to the README.md file
+ - Added release, so the automated release finally works (I hope)
