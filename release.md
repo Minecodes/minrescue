@@ -1,0 +1,3 @@
+ - Added releases
+ - Added release notes
+ - Finally added content to the README.md file
